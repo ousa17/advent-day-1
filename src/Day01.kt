@@ -1,17 +1,29 @@
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
-    }
-
-    fun part2(input: List<String>): Int {
-        return input.size
-    }
-
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
     val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
+
+    val it: ListIterator<String> = input.listIterator()
+
+    var mapTotalAndCalories: List<Map<Int, List<String>>> = emptyList()
+
+    var leftIndex = 0
+    while (it.hasNext()) {
+        val item = it.next()
+        if (item == "") {
+            mapTotalAndCalories =
+                mapTotalAndCalories.addRangeToList(input, leftIndex, it.previousIndex())
+            leftIndex = it.nextIndex()
+        } else if (it.previousIndex() + 1 == input.size) {
+            mapTotalAndCalories =
+                mapTotalAndCalories.addRangeToList(input, leftIndex, it.previousIndex() + 1)
+        }
+    }
+    val solution1 = mapTotalAndCalories.maxOf { it.keys.maxOf { it } }
+    val solution2 = mapTotalAndCalories.flatMap {
+        it.keys
+    }.sortedByDescending { it }.take(3).sum()
+
+    println(solution1)
+    println(solution2)
+
+
 }
