@@ -1,3 +1,8 @@
+package day1
+
+import addRangeToList
+import readInput
+
 fun main() {
     val input = readInput("Day01")
 
@@ -24,6 +29,5 @@ fun main() {
 
     println(solution1)
     println(solution2)
-
 
 }
